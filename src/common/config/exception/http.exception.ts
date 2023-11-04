@@ -8,3 +8,4 @@ export class HttpExceptionFilter implements ExceptionFilter {
     response.status(exception.getStatus()).json(exception.getResponse());
   }
 }
+// PIPELINE EXAM question sur la gestion des exception en oral
