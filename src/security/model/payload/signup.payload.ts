@@ -1,11 +1,20 @@
 import {ApiProperty} from '@nestjs/swagger';
+import {IsEmail, IsNotEmpty, Length} from "class-validator";
 export class SignupPayload {
     @ApiProperty()
-    username: string;
+    @IsNotEmpty()
+    @Length(1,10)
+    username: string
+
     @ApiProperty()
-    password: string;
+    @IsNotEmpty()
+    @Length(1,10)
+    password: string
+
     @ApiProperty()
-    mail: string;
+    @IsNotEmpty()
+    @IsEmail()
+    mail: string
 
 
 
