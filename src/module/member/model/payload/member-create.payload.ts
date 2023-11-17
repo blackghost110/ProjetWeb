@@ -1,7 +1,8 @@
 import {IsArray, IsBoolean, IsDate, IsEmail, IsOptional, IsString, Length} from "class-validator";
-import {MemberSubscription} from "../entity/member-subscription.entity";
+import {MemberSubscription} from "../entity";
 import {ApiCodeResponse} from "@common/api/data/enum";
 import {ApiProperty} from "@nestjs/swagger";
+import {Address} from "@common/model";
 
 export class MemberCreatePayload {
     @ApiProperty()
@@ -39,6 +40,9 @@ export class MemberCreatePayload {
     @IsOptional()
     @IsArray()
     subscriptions: MemberSubscription[];
+
+    @IsOptional()
+    address: Address
 
     @IsOptional()
     @IsBoolean()

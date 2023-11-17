@@ -1,10 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import {MemberCreatePayload} from "../model/payload/member-create.payload";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Member} from "../model/entity/member.entity";
+import {Member} from "../model/entity";
 import {Repository} from "typeorm";
 import {Builder} from "builder-pattern";
 import {isNil} from "lodash";
+import {
+    MemberCreateException,
+    MemberDeleteException,
+    MemberListException,
+    MemberNotFoundException,
+    MemberUpdateException,
+} from "../member.exception";
+import {MemberUpdatePayload} from "../model/payload/member-update.payload";
+
 
 @Injectable()
 export class MemberService {
@@ -17,22 +26,13 @@ export class MemberService {
                 .mail(payload.mail)
                 .iban(payload.iban)
                 .phone(payload.phone)
-                //.gender(payload.gender)
                 .birthdate(payload.birthdate)
-                //.address(payload.address)
+                .address(payload.address)
                 .active(payload.active)
                 .build()
             );
         } catch (e) {
             throw new MemberCreateException();
-        }
-    }
-    async delete(id: string): Promise<void> {
-        try {
-            const detail = await this.detail(id);
-            await this.repository.remove(detail);
-        } catch (e) {
-            throw new MemberDeleteException();
         }
     }
     async detail(id: string): Promise<Member> {
@@ -41,6 +41,14 @@ export class MemberService {
             return result;
         }
         throw new MemberNotFoundException();
+    }
+    async delete(id: string): Promise<void> {
+        try {
+            const detail = await this.detail(id);
+            await this.repository.remove(detail);
+        } catch (e) {
+            throw new MemberDeleteException();
+        }
     }
     async getAll(): Promise<Member[]> {
         try {

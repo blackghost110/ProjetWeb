@@ -1,6 +1,8 @@
-import {Column, Entity, OneToMany, PrimaryColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn} from "typeorm";
 import {BaseEntity} from "@common/model/entity/base.entity";
 import {ulid} from "ulid";
+import {Address} from "@common/model";
+import {MemberSubscription} from "./member-subscription.entity";
 
 @Entity()
 export class Member extends BaseEntity { // PIPELINEEEEE corriger la ligne du dessous
@@ -20,15 +22,15 @@ export class Member extends BaseEntity { // PIPELINEEEEE corriger la ligne du de
     iban: string;
     @Column({length: 10, nullable: true})
     code_activation: string;
-    /*
-    @OneToMany(() => MemberSubscription, (ms) => ms.member,
-        {cascade: true, eager: true})
+
+    @OneToMany(() => MemberSubscription, (ms) => ms.member, {cascade: true, eager: true})
     subscriptions: MemberSubscription[];
+
     @OneToOne(() => Address, {cascade: true, eager: true})
     @JoinColumn({referencedColumnName: 'address_id', name: 'address_id_fk'})
-    address: Address
-    */
+    address: Address;
+
     @Column({default: false})
-    active: boolean
+    active: boolean;
 
 }
