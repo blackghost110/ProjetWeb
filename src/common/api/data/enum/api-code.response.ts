@@ -2,7 +2,8 @@ export enum ApiCodeResponse {
 
   // Security API Exceptions
 
-  TEST = 'api-result.test',
+    PAYLOAD_PARAM_IS_MISSING = 'api',
+    TEST = 'api-result.test',
   STOCK_DETAIL_SUCCESS = 'api.error.stock-detail',
   TOKEN_GEN_ERROR = 'api.error.stock-detail',
   USER_ALREADY_EXIST = 'api.security.error.user-exist',

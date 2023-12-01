@@ -3,23 +3,26 @@ import {AppModule} from './home/app.module';
 import {HttpExceptionFilter} from '@common/config/exception';
 import {swaggerConfiguration} from "@common/documentation";
 import {ValidationException} from "@common/api/exception/validation.exception";
-import {ValidationError, ValidationPipe} from "@nestjs/common";
+import {Logger, ValidationError, ValidationPipe} from "@nestjs/common";
 import {ConfigKey, configManager} from "@common/config";
 import {ApiInterceptor} from "@common/api";
 
-
-async function bootstrap() {
+const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix(configManager.getValue(ConfigKey.APP_BASE_URL));
+  swaggerConfiguration.config(app);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ApiInterceptor());
   app.useGlobalPipes(new ValidationPipe({
     exceptionFactory: (validationErrors: ValidationError[] = []) => new
     ValidationException(validationErrors)
   }));
-  swaggerConfiguration.config(app);
-  await app.listen(configManager.getValue(ConfigKey.DB_PORT));
+  await app.listen(parseInt(configManager.getValue(ConfigKey.APP_PORT), 10));
 }
-bootstrap().then();
+bootstrap().then(() =>{
+  const logger = new Logger('Main Logger');
+  logger.log('Server is started !!')
+});
 
 
 // notion de controlleur ? question exam

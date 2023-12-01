@@ -5,7 +5,7 @@ export class SignInPayload {
     @IsNotEmpty()
     username: string;
 
-    @IsNotEmpty()
     @ApiProperty()
+    @IsNotEmpty()
     password: string;
 }

@@ -1,10 +1,11 @@
-import {BaseEntity} from "@common/model";
 import {Column, Entity, PrimaryColumn} from "typeorm";
 import {ulid} from "ulid";
+import {BaseEntity} from "@common/model";
 
 
 @Entity()
-export class Address extends BaseEntity {
+export class Address extends BaseEntity
+{
 
     @PrimaryColumn('varchar', {length: 26, default: () => `'${ulid()}'`})
     address_id: string;

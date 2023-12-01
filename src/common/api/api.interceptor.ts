@@ -5,11 +5,14 @@ import {configManager} from "@common/config/config.manager";
 import {ConfigKey} from "@common/config/enum";
 import {isNil} from "lodash";
 import { map } from 'rxjs/operators';
+import {instanceToPlain} from "class-transformer";
 
 
 @Injectable()
 export class ApiInterceptor implements NestInterceptor {
+
     private readonly logger = new Logger(ApiInterceptor.name);
+
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const ctx = context.switchToHttp();
         const path = ctx.getRequest().route.path;
@@ -17,7 +20,7 @@ export class ApiInterceptor implements NestInterceptor {
             .handle() // prend les donnees
             .pipe(// transforme la donnee
                 map((response: any) => {
-                    return {code: this.map(path), data: response, result: true}
+                    return {code: this.map(path), data: instanceToPlain(response), result: true}
                 })
             );
     }

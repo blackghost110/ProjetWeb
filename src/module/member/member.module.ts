@@ -5,8 +5,8 @@ import { MemberController } from './controller/member.controller';
 import {Address} from "@common/model";
 import { MemberPlanService } from './service/member-plan.service';
 import {Member, MemberPlan, MemberSubscription} from "./model/entity";
+import {MemberPlanController} from "./controller/member-plan.controller";
 
-let MemberPlanController;
 
 @Module({
   imports: [TypeOrmModule.forFeature([Member, MemberPlan, MemberSubscription, Address])],

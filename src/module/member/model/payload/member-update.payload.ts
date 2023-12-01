@@ -57,6 +57,7 @@ export class MemberUpdatePayload {
     @IsOptional()
     address: Address
 
+    @ApiProperty()
     @IsOptional()
     @IsBoolean({message:ApiCodeResponse.MEMBER_PAYLOAD_ACTIVE_INVALID})
     active: boolean

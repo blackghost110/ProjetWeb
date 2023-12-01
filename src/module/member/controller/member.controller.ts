@@ -6,7 +6,7 @@ import {Member} from "../model/entity";
 import {MemberUpdatePayload} from "../model/payload/member-update.payload";
 
 @ApiBearerAuth('access-token')
-@ApiTags('Membre')
+@ApiTags('Member')
 @Controller('member')
 export class MemberController {
     constructor(private readonly service: MemberService) {

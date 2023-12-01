@@ -1,7 +1,9 @@
 import {IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, Length} from "class-validator";
+import {ApiProperty} from "@nestjs/swagger";
 
 
 export class MemberPlanUpdatePayload {
+    @ApiProperty()
     @IsNotEmpty()
     @Length(26, 26)
     member_plan_id: string;
@@ -10,22 +12,27 @@ export class MemberPlanUpdatePayload {
         @IsEnum(MemberPlanType)
         type: MemberPlanType;*/
 
+    @ApiProperty()
     @IsNotEmpty()
     @Length(1, 80)
     title: string;
 
+    @ApiProperty()
     @IsString()
     @IsOptional()
     description: string;
 
+    @ApiProperty()
     @IsOptional()
     @Length(1, 40)
     picture: string;
 
+    @ApiProperty()
     @IsNumber()
     @ IsOptional ()
     price: number;
 
+    @ApiProperty()
     @IsNumber()
     @ IsOptional ()
     nb_month: number;
@@ -34,10 +41,12 @@ export class MemberPlanUpdatePayload {
         @IsEnum(MemberPlanPaymentType)
         payment: MemberPlanPaymentType;*/
 
+    @ApiProperty()
     @IsBoolean()
     @IsOptional()
     cumulative: boolean;
 
+    @ApiProperty()
     @IsNumber()
     @IsOptional()
     nb_training: number;

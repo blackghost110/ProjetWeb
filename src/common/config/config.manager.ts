@@ -3,11 +3,11 @@ import {ConfigKey, configMinimalKeys} from '@common/config/enum';
 require('dotenv').config();
 class ConfigManager {
     constructor(private env: { [k: string]: string | undefined }) {}
-    public ensureValues(keys: ConfigKey[]): ConfigManager {
+    public ensureValues(keys: ConfigKey[]): ConfigManager { // assure que les variable minimum sont existant sinon crash
         keys.forEach((k: ConfigKey) => this.getValue(k, true));
         return this;
     }
-    public getTypeOrmConfig(): TypeOrmModuleOptions {
+    public getTypeOrmConfig(): TypeOrmModuleOptions { // permet de ne pas repeter des bouts de code partout
         return {
             type: this.getValue(ConfigKey.DB_TYPE) as any,
             host: this.getValue(ConfigKey.DB_HOST),
@@ -16,7 +16,7 @@ class ConfigManager {
             password: this.getValue(ConfigKey.DB_PASSWORD),
             database: this.getValue(ConfigKey.DB_DATABASE),
             entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
-            synchronize: (this.getValue(ConfigKey.DB_SYNC)=== 'true')
+            synchronize: (this.getValue(ConfigKey.DB_SYNC)=== 'true') // METTRE CELA EN FALSE UNE FOIS EN PRODUCTION, permet de synchro les shemas vers la DB
         }
     }
     getValue(key: ConfigKey, throwOnMissing = true): string {

@@ -14,26 +14,28 @@ export class JwtGuard implements CanActivate {
     private readonly logger = new Logger(JwtGuard.name);
     constructor(private readonly jwtService: JwtService,
                 private readonly securityService: SecurityService,
-                private reflector: Reflector) {
+                private reflector: Reflector) { // permet de recuperer les metadonées
     }
+    /*
+        cette methode permet de savoir si l'acces a une route est autorisé ou non
+        on recupere la metadonée de la route et on regarde s'il contient @Public (accessible sans necessite d'authentification)
+        si oui true, si non on bascule vers validateToken (verifier le jeton d'authentification)
+     */
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        //Here we check if route have @Public decorator;
-        const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY,
-            [context.getHandler(), context.getClass()]);
+        const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY,[context.getHandler(), context.getClass()]);
         return isPublic ? true : this.validateToken(context.switchToHttp().getRequest());
     }
 
 
     private validateToken(request: any): Observable<boolean> {
-        // token existe dans le header ?
+        // le champ 'authorization'/ token existe il dans le header
         if (!isNil(request.headers['authorization'])) {
             try {
                 // tente de recuperer mon id. si token pas valide, il est catch
                 const id = this.jwtService.verify(request.headers['authorization'].replace('Bearer ', '')).sub;
-                // si token valide, on ajoute user dans le request, pour savoir de qui vient le token
+                // si token valide, on ajoute les detail de l'user dans le request, pour savoir de qui vient le token
                 return from(this.securityService.detail(id)).pipe(
                     map((user: Credential) => {
-                        // on stocke objet Credential dans la requette
                         request.user = user;
                         return true;
                     })

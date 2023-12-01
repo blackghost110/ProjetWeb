@@ -10,8 +10,8 @@ import {RefreshTokenPayload, Credential, Token} from "../model";
 
 
 @Injectable()
-
 export class TokenService {
+    // permettra de logger proprement les erreurs et autre info
     private readonly logger = new Logger(TokenService.name);
 
     constructor(@InjectRepository(Token) private readonly repository: Repository<Token>,
@@ -32,7 +32,7 @@ export class TokenService {
                 secret: configManager.getValue(ConfigKey.JWT_REFRESH_TOKEN_SECRET),
                 expiresIn: configManager.getValue(ConfigKey.JWT_REFRESH_TOKEN_EXPIRE_IN)
             });
-            await this.repository.upsert( // pas .save car il va se referencer au tokenId, donc ici .upsert se base sur credential
+            await this.repository.upsert( // pas .save car il va se referencer au tokenId alors qu'ici on en a pas, donc ici .upsert se base sur l'option choisie
                 Builder<Token>()
                     .token(token)
                     .refreshToken(refreshToken)
@@ -46,18 +46,18 @@ export class TokenService {
             throw new TokenGenerationException();
         }
     }
-    // supprimer un token
+    // supprimer un enregistrement de la table Token pour un credential
     async deleteFor(credential: Credential): Promise<void> {
         await this.repository.delete({credential})
     }
 
 //PIPELINE question sur comment TOUT cela marche /////////////////////////////////
+    // permet de demander un nouveau token sans devoir a se reconnecter
     async refresh(payload: RefreshTokenPayload): Promise<Token> {
         try {
             // verifie si le token est expire (par rapport a la date du token), si oui il est catch
             const id = this.jwtService.verify(payload.refresh, {secret:
-                    configManager.getValue(ConfigKey.JWT_REFRESH_TOKEN_SECRET)}).sub;
-            // recupere credential via repository
+                    configManager.getValue(ConfigKey.JWT_REFRESH_TOKEN_SECRET)}).sub; // si refreshToken est valide, extrait le sub et stocke dans id
             const credential = await this.credentialRepository.findOneBy({credential_id: id});
             return await this.getTokens(credential);
         } catch (e) {

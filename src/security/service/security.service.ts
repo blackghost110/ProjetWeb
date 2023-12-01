@@ -44,7 +44,6 @@ export class SecurityService {
 
     //
     async signup(payload: SignupPayload): Promise<Credential | null> {
-        // on recupere par le usename (AMELIORATION a faire)
         const result: Credential | null = await this.repository.findOneBy({username: payload.username});
 
         if (!isNil(result)) {
