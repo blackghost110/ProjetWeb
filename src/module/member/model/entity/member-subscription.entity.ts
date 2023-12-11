@@ -11,7 +11,7 @@ export class MemberSubscription{
     @CreateDateColumn()
     start_date: Date;
 
-    @OneToOne(() => Member, {eager: false})
+    @OneToOne(() => Member, {eager: false, orphanedRowAction:"delete"})
     @JoinColumn({referencedColumnName: 'member_id', name: 'member_id_fk'})
     member: Member;
 

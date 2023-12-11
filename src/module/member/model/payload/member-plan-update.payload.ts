@@ -14,6 +14,7 @@ export class MemberPlanUpdatePayload {
 
     @ApiProperty()
     @IsNotEmpty()
+    @IsOptional()
     @Length(1, 80)
     title: string;
 

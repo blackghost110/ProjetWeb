@@ -20,7 +20,7 @@ export class MemberService {
     constructor(@InjectRepository(Member) private readonly repository: Repository<Member>) {}
     async create(payload: MemberCreatePayload): Promise<Member> {
         try {
-            return await this.repository.save(Builder<Member>()
+            const newMember = Object.assign(new Member(), Builder<Member>()
                 .firstname(payload.firstname)
                 .lastname(payload.lastname)
                 .mail(payload.mail)
@@ -29,8 +29,9 @@ export class MemberService {
                 .birthdate(payload.birthdate)
                 .address(payload.address)
                 .active(payload.active)
-                .build()
-            );
+                .code_activation(payload.code_activation)
+                .build());
+            return await this.repository.save(newMember);
         } catch (e) {
             throw new MemberCreateException();
         }
@@ -67,7 +68,7 @@ export class MemberService {
             detail.phone = payload.phone;
             detail.iban = payload.iban;
             detail.active = payload.active;
-            //detail.subscriptions = payload.subscriptions;
+            detail.subscriptions = payload.subscriptions;
             return await this.repository.save(detail);
         } catch (e) {
             throw new MemberUpdateException();

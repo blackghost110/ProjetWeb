@@ -1,2 +1,2 @@
 export * from './base.entity';
-export * from './address';
+export * from './address.entity';

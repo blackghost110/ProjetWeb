@@ -5,4 +5,3 @@ export const AppControllerHelloWorld: ApiOperationOptions = {
     description: 'Ma super description pour cette méthode'
 };
 
-//export const getHelloApiReponse200: ApiReponseOptions = {status 200, description: 'heloo man'}

@@ -23,6 +23,3 @@ bootstrap().then(() =>{
   const logger = new Logger('Main Logger');
   logger.log('Server is started !!')
 });
-
-
-// notion de controlleur ? question exam

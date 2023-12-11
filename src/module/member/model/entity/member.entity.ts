@@ -1,8 +1,9 @@
-import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn} from "typeorm";
+import {BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn} from "typeorm";
 import {BaseEntity} from "@common/model/entity/base.entity";
 import {ulid} from "ulid";
 import {Address} from "@common/model";
 import {MemberSubscription} from "./member-subscription.entity";
+import {isNil} from "lodash";
 
 /*
     PIPELINEEEEE corriger la ligne du dessous
@@ -49,4 +50,10 @@ export class Member extends BaseEntity {
     @Column({default: false})
     active: boolean;
 
+    @BeforeInsert()
+    setId() {
+        console.log('im here', this.code_activation);
+        this.code_activation = isNil(this.code_activation) ? ulid().substring(0, 10) :
+            this.code_activation;
+    }
 }
