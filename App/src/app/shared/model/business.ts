@@ -1,7 +1,10 @@
 export type Payload = Object;
 export type Dto = Object;
-export interface Business {
+
+export interface IsEmpty{
+  isEmpty:boolean;
+}
+export interface Business extends IsEmpty{
   id: string;
-  isEmpty: boolean;
   str: string;
 }

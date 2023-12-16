@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from "../../../../environment/environment";
 import {catchError, map, Observable, of} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {ApiResponse} from "../data/api.response";
+import {ApiResponse} from "@shared";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class ApiService {
   private readonly baseURL: string = environment.apiURL;
   private readonly paramIsMissingErrorCode: number = environment.PARAM_IS_MISSING;
   private readonly http: HttpClient = inject(HttpClient);
+
   get(partURL: string): Observable<ApiResponse> {
     return this.handle(this.http.get(`${this.baseURL}${partURL}`));
   }

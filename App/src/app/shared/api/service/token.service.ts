@@ -1,7 +1,7 @@
 import {effect, EffectRef, Injectable, signal, WritableSignal} from '@angular/core';
 import {environment} from "../../../../environment/environment";
 import {Token} from "../model/token";
-
+import {isNil} from "lodash";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class TokenService {
     }
   }
   private handleTokenChange(token: Token): void {
-    if (token.token.trim().length > 0) {
+    if (!token.isEmpty) {
       localStorage.setItem(environment.TOKEN_KEY, JSON.stringify(token));
     } else {
       localStorage.removeItem(environment.TOKEN_KEY);
@@ -30,6 +30,6 @@ export class TokenService {
     return !isNil(str) ? JSON.parse(str) as Token : this.getEmpty();
   }
   private getEmpty(): Token {
-    return {token: '', refreshToken: ''};
+    return {token: '', refreshToken: '', isEmpty: true};
   }
 }

@@ -6,5 +6,7 @@ export enum AppNode {
   MEMBER = 'member',
   DETAIL = 'detail/:id',
   SIGN_IN = 'sign-in',
-  FALL_BACK = '**'
+  SIGN_UP = 'sign-up',
+  FALL_BACK = '**',
+
 }

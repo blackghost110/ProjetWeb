@@ -22,6 +22,7 @@ export class SecurityService {
     // soit detail(credential_id: string)
     async detail(id: string): Promise<Credential> {               // soit {credential_id}
         const result: Credential = await this.repository.findOneBy({credential_id: id});
+
         if (!(isNil(result))) {
             return result;
         }

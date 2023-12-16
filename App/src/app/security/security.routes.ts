@@ -1,24 +1,32 @@
 import {Routes} from "@angular/router";
+import {AppNode} from "../shared/routes/enum/node.enum";
 
 export const securityRoutes: Routes = [
   {
     path: '',
-    redirectTo : 'sign-in', pathMatch: 'full'
-  },
+    loadComponent: () => import('./page').then(p => p.SecurityRouterComponent),
+    children: [
+      {
+        path: '',
+        redirectTo: AppNode.SIGN_IN,
+        pathMatch: 'full'
+      },
 
-  {
-    path: 'sign-in',
-    loadComponent: () => import('./page').then(c => c.SignInPageComponent)
-  },
+      {
+        path: AppNode.SIGN_IN,
+        loadComponent: () => import('./page').then(c => c.SignInPageComponent)
+      },
 
-  {
-    path: 'sign-up',
-    loadComponent: () => import('./page').then(c => c.SignUpPageComponent)
-  },
+      {
+        path: AppNode.SIGN_UP,
+        loadComponent: () => import('./page').then(c => c.SignUpPageComponent)
+      },
 
-  {
-    path: '**',
-    loadComponent: () => import('./page').then(c => c.SecurityFallBackPageComponent)
-  },
+      {
+        path: AppNode.FALL_BACK,
+        loadComponent: () => import('./page').then(c => c.SecurityFallBackPageComponent)
+      },
 
+    ]
+  }
 ]
