@@ -71,11 +71,31 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+
           "configurations": {
+
             "production": {
+
+
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }],
+
+
               "browserTarget": "ProjetAng:build:production"
             },
             "development": {
+
+
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }],
+
+
               "browserTarget": "ProjetAng:build:development"
             }
           },

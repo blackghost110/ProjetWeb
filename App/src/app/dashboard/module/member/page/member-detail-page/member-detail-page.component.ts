@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input, OnInit, signal, WritableSignal} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {delay, of, tap} from "rxjs";
+import {MemberService} from "../../member.service";
 
 @Component({
   selector: 'app-member-detail-page',
@@ -10,4 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class MemberDetailPageComponent {
   @Input() id!:string;
+  readonly memberService = inject(MemberService)
+
+  member: WritableSignal<string> = signal('no body');
+
+
+
+
 }

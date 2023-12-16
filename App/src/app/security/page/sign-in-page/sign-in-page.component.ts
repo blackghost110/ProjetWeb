@@ -17,4 +17,7 @@ export class SignInPageComponent {
   onClickHandler(): void {
     this.onClickCustom.emit("Cool");
   }
+
+
+
 }

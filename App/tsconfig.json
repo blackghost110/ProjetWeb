@@ -3,11 +3,14 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": { // change structure des module donc misere pour changer tout ca, ce systeme permet d'arranger comme on veux
-      "@security": ["app/security/index.ts"],
+    "paths": { // change structure des module donc misere pour changer tout ca, ce systeme arrange
       "@root": ["app/root/index.ts"],
+      "@dashboard": ["app/dashboard/index.ts"],
+      "@security": ["app/security/index.ts"],
+      "@member-feature": ["app/dashboard/module/member/index.ts"],
+      "@shared": ["app/shared/index.ts"],
       "@shared-ui": ["app/shared/ui/index.ts"],
-      "@dashboard": ["app/dashboard/index.ts"]
+      "@api": ["app/shared/api/index.ts"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
