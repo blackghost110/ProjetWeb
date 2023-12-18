@@ -1,7 +1,7 @@
 import {Payload} from "@shared";
 
-export interface SignupPayload extends Payload{
-  username: string
-  password: string
-  mail: string
+export interface SignUpPayload extends Payload{
+  username: string;
+  password: string;
+  mail: string;
 }
